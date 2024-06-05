@@ -1,16 +1,16 @@
 # Règle de gestion
 
-## Visite du site pire2pire.com
+### Visite du site pire2pire.com
 
 - Le visteur peut avoir accès à la page d'accueil de l'application web.
 - Le visteur peut prendre connaissance des services proposés par pire2pire.
 
-## Inscription aux services
+### Inscription aux services
 
 - Le visiteur peut s'inscrire et devient alors un apprenant ou un formateur.
     - Le visiteur s'inscrira via un formulaire en renseignant ses données personnelles.
 
-## Connexion
+### Connexion
 
 - Il existe deux profils : apprenant et formateur.
 - L'apprenant ou le formateur peut se connecter via un formulaire de connexion.
@@ -18,11 +18,11 @@
 - L'apprenant est caractérisé par un numéro d’inscription unique, un nom, un prénom, une adresse et une date de naissance.
 - Le formateur est caractérisé par un numéro d’inscription unique, un code, un nom et un prénom.
 
-## Suppression de compte 
+### Suppression de compte 
 
 - Un apprenant peut supprimer son compte personnel de la plateforme.
 
-## Gestion des leçons
+### Gestion des leçons
 
 - La leçon, lorsque publiée, doit contenir :
     - un titre
@@ -42,7 +42,7 @@
 - La leçon peut être entièrement agnostique, c'est-à-dire rattachée à aucun modules.
 - La leçon peut être rattachée à un ou plusieurs modules.
 
-## Gestion des modules 
+### Gestion des modules 
 
 - Le module, lorsque publié, doit contenir : 
     - un titre
@@ -61,7 +61,7 @@
 - Le module peut être archivé par le formateur qui l'a créé.
 - Si un module est archivé, cela n'entraine pas l'archivage de la ou des leçons qui étaient rattachées à ce dernier.
 
-## Gestion des formations par les formateurs
+### Gestion des formations par les formateurs
 
 - La formation, lorsque publiée doit contenir : 
     - un titre
@@ -79,7 +79,7 @@
 - Si une formation est archivée, alors les apprenants déjà inscrits à cette formation garderont un accès, mais cette dernière ne sera plus visible pour les autres apprenants qui n'étaient pas inscrits.
 - Si une formation est archivée, cela n'entraine pas l'archivage du ou des modules qui étaient rattachés à cette dernière.
 
-## Gestion des formations par les apprenants 
+### Gestion des formations par les apprenants 
 
 - Un apprenant peut s'inscrire à une ou plusieurs formations.
 - Un apprenant peut valider manuellement, s'il le souhaite, certains modules présents dans une formation qu'il maîtrise déjà.

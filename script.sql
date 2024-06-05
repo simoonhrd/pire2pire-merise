@@ -1,50 +1,6 @@
-CREATE TABLE authors(
-   id_author INT,
-   trainer_code VARCHAR(12) NOT NULL,
-   firstname VARCHAR(100) NOT NULL,
-   lastname VARCHAR(100) NOT NULL,
-   address VARCHAR(255) NOT NULL,
-   city VARCHAR(255) NOT NULL,
-   postal_code VARCHAR(10) NOT NULL,
-   email VARCHAR(255) NOT NULL,
-   password VARCHAR(255) NOT NULL,
-   PRIMARY KEY(id_author),
-   UNIQUE(trainer_code)
-);
-
-CREATE TABLE students(
-   id_student INT,
-   firstname VARCHAR(100) NOT NULL,
-   lastname VARCHAR(100) NOT NULL,
-   address VARCHAR(255) NOT NULL,
-   city VARCHAR(255) NOT NULL,
-   postal_code VARCHAR(10) NOT NULL,
-   email VARCHAR(255) NOT NULL,
-   password VARCHAR(255) NOT NULL,
-   PRIMARY KEY(id_student)
-);
-
-CREATE TABLE sections(
-   id_section INT,
-   title VARCHAR(255) NOT NULL,
-   educational_objective TEXT NOT NULL,
-   status VARCHAR(10) NOT NULL,
-   PRIMARY KEY(id_section),
-   UNIQUE(title)
-);
-
-CREATE TABLE trainings(
-   id_training INT,
-   title VARCHAR(255) NOT NULL,
-   educational_objective TEXT NOT NULL,
-   status VARCHAR(10) NOT NULL,
-   PRIMARY KEY(id_training),
-   UNIQUE(title)
-);
-
 CREATE TABLE images(
    id_image INT,
-   image_name VARCHAR(255) NOT NULL,
+   name VARCHAR(100) NOT NULL,
    url VARCHAR(255) NOT NULL,
    PRIMARY KEY(id_image)
 );
@@ -52,24 +8,88 @@ CREATE TABLE images(
 CREATE TABLE tags(
    id_tag INT,
    name VARCHAR(255) NOT NULL,
-   PRIMARY KEY(id_tag)
+   PRIMARY KEY(id_tag),
+   UNIQUE(name)
+);
+
+CREATE TABLE localisation(
+   id_localisation INT,
+   adress VARCHAR(100) NOT NULL,
+   city VARCHAR(100) NOT NULL,
+   zip_code VARCHAR(10) NOT NULL,
+   PRIMARY KEY(id_localisation)
+);
+
+CREATE TABLE status(
+   id_status INT,
+   name VARCHAR(20) NOT NULL,
+   PRIMARY KEY(id_status),
+   UNIQUE(name)
+);
+
+CREATE TABLE trainers(
+   id_author INT,
+   trainer_code VARCHAR(12) NOT NULL,
+   firstname VARCHAR(100) NOT NULL,
+   lastname VARCHAR(100) NOT NULL,
+   email VARCHAR(255) NOT NULL,
+   password VARCHAR(255) NOT NULL,
+   id_localisation INT NOT NULL,
+   PRIMARY KEY(id_author),
+   UNIQUE(trainer_code),
+   UNIQUE(email),
+   FOREIGN KEY(id_localisation) REFERENCES localisation(id_localisation)
+);
+
+CREATE TABLE students(
+   id_student INT,
+   firstname VARCHAR(100) NOT NULL,
+   lastname VARCHAR(100) NOT NULL,
+   email VARCHAR(255) NOT NULL,
+   password VARCHAR(255) NOT NULL,
+   id_localisation INT NOT NULL,
+   PRIMARY KEY(id_student),
+   UNIQUE(email),
+   FOREIGN KEY(id_localisation) REFERENCES localisation(id_localisation)
+);
+
+CREATE TABLE sections(
+   id_section INT,
+   title VARCHAR(255) NOT NULL,
+   educational_objective TEXT NOT NULL,
+   id_author INT NOT NULL,
+   id_status INT NOT NULL,
+   PRIMARY KEY(id_section),
+   FOREIGN KEY(id_author) REFERENCES trainers(id_author),
+   FOREIGN KEY(id_status) REFERENCES status(id_status)
+);
+
+CREATE TABLE trainings(
+   id_training INT,
+   title VARCHAR(255) NOT NULL,
+   educational_objective TEXT NOT NULL,
+   id_author INT NOT NULL,
+   id_status INT NOT NULL,
+   PRIMARY KEY(id_training),
+   FOREIGN KEY(id_author) REFERENCES trainers(id_author),
+   FOREIGN KEY(id_status) REFERENCES status(id_status)
 );
 
 CREATE TABLE lessons(
    id_lesson INT,
    title VARCHAR(255) NOT NULL,
    educational_objective TEXT NOT NULL,
-   status VARCHAR(10) NOT NULL,
    video_url VARCHAR(255) NOT NULL,
    text_content TEXT NOT NULL,
+   id_status INT NOT NULL,
    id_author INT NOT NULL,
    PRIMARY KEY(id_lesson),
-   UNIQUE(title),
    UNIQUE(video_url),
-   FOREIGN KEY(id_author) REFERENCES authors(id_author)
+   FOREIGN KEY(id_status) REFERENCES status(id_status),
+   FOREIGN KEY(id_author) REFERENCES trainers(id_author)
 );
 
-CREATE TABLE lesson_sections(
+CREATE TABLE section_lessons(
    id_lesson INT,
    id_section INT,
    PRIMARY KEY(id_lesson, id_section),
@@ -77,7 +97,7 @@ CREATE TABLE lesson_sections(
    FOREIGN KEY(id_section) REFERENCES sections(id_section)
 );
 
-CREATE TABLE section_trainings(
+CREATE TABLE training_sections(
    id_section INT,
    id_training INT,
    PRIMARY KEY(id_section, id_training),
@@ -85,7 +105,7 @@ CREATE TABLE section_trainings(
    FOREIGN KEY(id_training) REFERENCES trainings(id_training)
 );
 
-CREATE TABLE sign_up(
+CREATE TABLE student_trainings(
    id_student INT,
    id_training INT,
    PRIMARY KEY(id_student, id_training),
@@ -107,20 +127,4 @@ CREATE TABLE lesson_images(
    PRIMARY KEY(id_lesson, id_image),
    FOREIGN KEY(id_lesson) REFERENCES lessons(id_lesson),
    FOREIGN KEY(id_image) REFERENCES images(id_image)
-);
-
-CREATE TABLE author_sections(
-   id_author INT,
-   id_section INT,
-   PRIMARY KEY(id_author, id_section),
-   FOREIGN KEY(id_author) REFERENCES authors(id_author),
-   FOREIGN KEY(id_section) REFERENCES sections(id_section)
-);
-
-CREATE TABLE author_trainings(
-   id_author INT,
-   id_training INT,
-   PRIMARY KEY(id_author, id_training),
-   FOREIGN KEY(id_author) REFERENCES authors(id_author),
-   FOREIGN KEY(id_training) REFERENCES trainings(id_training)
 );
